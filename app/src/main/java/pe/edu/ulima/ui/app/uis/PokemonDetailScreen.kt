@@ -14,6 +14,7 @@ import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -21,13 +22,24 @@ import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.runtime.livedata.observeAsState
+import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Green
+import androidx.compose.ui.graphics.Color.Companion.Transparent
+import androidx.compose.ui.graphics.Color.Companion.White
+import androidx.compose.ui.graphics.Color.Companion.Yellow
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.toSize
 import coil.compose.rememberImagePainter
 import pe.edu.ulima.ui.app.viewmodels.PokemonDetailViewModel
 
@@ -48,13 +60,20 @@ public fun PokemonDetailScreen(
 ){
     val context = LocalContext.current as Activity
     var imageUri by remember { mutableStateOf<Uri?>(null) }
-    val bitmap = remember { mutableStateOf<Bitmap?>(null)}
-
     var uri2 by remember { mutableStateOf(viewModel.uri) }
-
     val name: String by viewModel.name.observeAsState(initial = "")
-
     val uri3: Uri? by viewModel.uri2.observeAsState(initial = null)
+    val bitmap = remember { mutableStateOf<Bitmap?>(null)}
+    var expanded by remember { mutableStateOf(false) }
+    val list = listOf("Kotlin", "Java", "Dart", "Python")
+    var selectedItem by remember { mutableStateOf("") }
+    var textFiledSize by remember { mutableStateOf(Size.Zero) }
+    val icon = if (expanded){
+        Icons.Filled.KeyboardArrowUp
+    }else{
+        Icons.Filled.KeyboardArrowDown
+    }
+
 
     val launcher = rememberLauncherForActivityResult(
         // ActivityResultContracts.StartActivityForResult(),
@@ -100,6 +119,7 @@ public fun PokemonDetailScreen(
         ) {
             Text(text = "Take a picture")
         }
+        // name
         TextField(
             value = name,
             onValueChange = {
@@ -117,7 +137,47 @@ public fun PokemonDetailScreen(
                 backgroundColor = Color.Transparent
             )
         )
-
+        // generación
+        OutlinedTextField(
+            value = selectedItem,
+            enabled = false,
+            onValueChange = {
+                selectedItem = it },
+            modifier = Modifier
+                .fillMaxWidth()
+                .onGloballyPositioned { coordinates ->
+                    textFiledSize = coordinates.size.toSize()
+                },
+            label = {Text(text="Generación de Pokemon")},
+            colors = TextFieldDefaults.outlinedTextFieldColors(
+                focusedBorderColor = Green,
+                unfocusedBorderColor = Transparent,
+            disabledTextColor = White),
+            trailingIcon = {
+                Icon(icon, "", Modifier.clickable{
+                    expanded = !expanded
+                })
+            }
+        )
+        DropdownMenu(
+            expanded = expanded,
+            onDismissRequest = {
+                expanded = false
+            },
+            modifier = Modifier
+                .width(with(LocalDensity.current){textFiledSize.width.toDp()})
+        ) {
+            list.forEach { label ->
+                DropdownMenuItem(
+                    onClick = {
+                        selectedItem = label
+                        expanded = false
+                    }                ) {
+                    Text(text = label)
+                }
+            }
+        }
+        // hr
         Divider(
             modifier = Modifier
                 .fillMaxWidth()

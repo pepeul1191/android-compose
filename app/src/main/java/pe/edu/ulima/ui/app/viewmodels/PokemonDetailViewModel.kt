@@ -31,4 +31,10 @@ class PokemonDetailViewModel: ViewModel() {
     fun updateUri2(it: Uri){
         _uri2.postValue(it)
     }
+
+    private val _lProgramacion = MutableLiveData<String>(null)
+    var lProgramacion: LiveData<String> = _lProgramacion
+    fun updateLProgramacion(it: String){
+        _lProgramacion.postValue(it)
+    }
 }
