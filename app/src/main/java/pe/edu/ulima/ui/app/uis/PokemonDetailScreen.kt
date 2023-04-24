@@ -61,8 +61,6 @@ public fun PokemonDetailScreen(
     val context = LocalContext.current as Activity
     var imageUri by remember { mutableStateOf<Uri?>(null) }
     var uri2 by remember { mutableStateOf(viewModel.uri) }
-    val name: String by viewModel.name.observeAsState(initial = "")
-    val uri3: Uri? by viewModel.uri2.observeAsState(initial = null)
     val bitmap = remember { mutableStateOf<Bitmap?>(null)}
     var expanded by remember { mutableStateOf(false) }
     val list = listOf("Kotlin", "Java", "Dart", "Python")
@@ -73,7 +71,10 @@ public fun PokemonDetailScreen(
     }else{
         Icons.Filled.KeyboardArrowDown
     }
-
+    // viewmodel map
+    val name: String by viewModel.name.observeAsState(initial = "")
+    val uri3: Uri? by viewModel.uri2.observeAsState(initial = null)
+    val generationName: String by viewModel.generationName.observeAsState(initial = "")
 
     val launcher = rememberLauncherForActivityResult(
         // ActivityResultContracts.StartActivityForResult(),
@@ -139,10 +140,10 @@ public fun PokemonDetailScreen(
         )
         // generación
         OutlinedTextField(
-            value = selectedItem,
+            value = generationName,
             enabled = false,
             onValueChange = {
-                selectedItem = it },
+                viewModel.updateGenerationName(it) },
             modifier = Modifier
                 .fillMaxWidth()
                 .onGloballyPositioned { coordinates ->
@@ -170,7 +171,7 @@ public fun PokemonDetailScreen(
             list.forEach { label ->
                 DropdownMenuItem(
                     onClick = {
-                        selectedItem = label
+                        viewModel.updateGenerationName(label)
                         expanded = false
                     }                ) {
                     Text(text = label)
@@ -188,6 +189,7 @@ public fun PokemonDetailScreen(
             onClick = {
                 Log.d("POKEMON_DETAIL_SCREEN", viewModel.uri2.value.toString())
                 Log.d("POKEMON_DETAIL_SCREEN", viewModel.name.value.toString())
+                Log.d("POKEMON_DETAIL_SCREEN", viewModel.generationName.value.toString())
             }
         ) {
             Text(text = "Ver Modelo")
