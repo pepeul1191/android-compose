@@ -27,12 +27,14 @@ import pe.edu.ulima.ui.app.uis.PokemonScreen
 import pe.edu.ulima.ui.app.uis.TouchScreen
 import pe.edu.ulima.ui.app.viewmodels.PokemonDetailViewModel
 import pe.edu.ulima.ui.login.uis.SplashScreen
+import pe.edu.ulima.ui.login.viewmodels.LoginScreenViewModel
 import pe.edu.ulima.ui.theme.*
 
 class MainActivity : ComponentActivity() {
     @RequiresApi(Build.VERSION_CODES.P)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        var loginScreenViewModel = LoginScreenViewModel()
         setContent {
             ProgramMovilTheme {
                 // A surface container using the 'background' color from the theme
@@ -41,10 +43,10 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     //SplashScreen()
-                    //LoginScreen()
+                    LoginScreen(loginScreenViewModel)
                     //PokemonScreen()
                     //PokemonDetailScreen(viewModel = PokemonDetailViewModel())
-                    TouchScreen()
+                    //TouchScreen()
                 }
             }
         }

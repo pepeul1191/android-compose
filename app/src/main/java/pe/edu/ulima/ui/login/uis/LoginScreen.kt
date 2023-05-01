@@ -12,6 +12,7 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.runtime.*
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -22,24 +23,31 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pe.edu.ulima.R
+import pe.edu.ulima.ui.login.viewmodels.LoginScreenViewModel
 import pe.edu.ulima.ui.theme.Gray200
+import pe.edu.ulima.ui.theme.Gray400
 import pe.edu.ulima.ui.theme.Green200
 import pe.edu.ulima.ui.theme.Orange200
 
 @Preview
 @Composable
 public fun LoginScreenPreview(){
-    LoginScreen()
+    LoginScreen(LoginScreenViewModel())
 }
 
 @Composable
-public fun LoginScreen(){
+public fun LoginScreen(
+    viewModel: LoginScreenViewModel
+){
     val context = LocalContext.current as Activity
-    var userText by remember { mutableStateOf(TextFieldValue("")) }
-    var passwordText by remember { mutableStateOf(TextFieldValue("")) }
+    // viewmodel
+    val usuario : String by viewModel.usuario.observeAsState(initial = "")
+    val contrasenia : String by viewModel.contrasenia.observeAsState(initial = "")
+    val mensaje : String by viewModel.mensaje.observeAsState(initial = "")
     // close
     Box(modifier = Modifier.fillMaxSize()) {
         IconButton(
@@ -80,11 +88,25 @@ public fun LoginScreen(){
                 text = "Bienvenido",
                 textAlign = TextAlign.Center,
             )
+            if(mensaje.contains("Error")){
+
+                Text(
+                    text = mensaje.split(":")[1],
+                    textAlign = TextAlign.Center,
+                    color = Color.Red
+                )
+            }else{
+                Text(
+                    text = mensaje,
+                    textAlign = TextAlign.Center,
+                    color = Color.Green
+                )
+            }
             // txtUser
             TextField(
-                value = userText,
+                value = usuario,
                 onValueChange = {
-                    userText = it
+                    viewModel.updateUsuario(it)
                 },
                 modifier = Modifier.fillMaxWidth(),
                 label = {
@@ -100,9 +122,9 @@ public fun LoginScreen(){
             )
             // txtPassword
             TextField(
-                value = passwordText,
+                value = contrasenia,
                 onValueChange = {
-                    passwordText = it
+                    viewModel.updateContrasenia(it)
                 },
                 label = {
                     Text(text = "Contraseña")
@@ -124,10 +146,7 @@ public fun LoginScreen(){
                     .fillMaxWidth()
                     .padding(top = 15.dp/*, start = 40.dp, end = 40.dp*/), // start -> izquierda, end -> derecha
                 onClick = {
-                    println("+++++++++++++++++++++++++++++++++++++++")
-                    println("${userText.text}")
-                    println("${passwordText.text}")
-                    println("+++++++++++++++++++++++++++++++++++++++")
+                    viewModel.validar()
                 }
             ){
                 Text("INGRESAR")
@@ -138,10 +157,7 @@ public fun LoginScreen(){
                     .fillMaxWidth()
                     .padding(top = 1.dp, /*start = 40.dp, end = 40.dp*/),
                 onClick = {
-                    println("+++++++++++++++++++++++++++++++++++++++")
-                    println("${userText.text}")
-                    println("${passwordText.text}")
-                    println("+++++++++++++++++++++++++++++++++++++++")
+
                 },
                 //colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFF4CAF50)) ,
                 colors = ButtonDefaults.buttonColors(backgroundColor = Green200)
@@ -165,6 +181,18 @@ public fun LoginScreen(){
                     .padding(top = 10.dp, bottom = 10.dp),
                 thickness = 2.dp,
             )
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 15.dp/*, start = 40.dp, end = 40.dp*/), // start -> izquierda, end -> derecha
+                onClick = {
+
+                },
+                colors = ButtonDefaults.buttonColors(backgroundColor = Gray400)
+            ){
+                Text("Crear Cuenta".toUpperCase())
+            }
+
             BackHandler {
                 Log.d("LoginScreen", "XDDDDDDDDDDDDDDDDDDDDDDDdd")
                 context.finish()
