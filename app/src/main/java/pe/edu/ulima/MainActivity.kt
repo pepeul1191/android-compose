@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import pe.edu.ulima.ui.app.uis.PokemonDetailScreen
 import pe.edu.ulima.ui.login.uis.LoginScreen
 import pe.edu.ulima.ui.app.uis.PokemonScreen
+import pe.edu.ulima.ui.app.uis.TouchScreen
 import pe.edu.ulima.ui.app.viewmodels.PokemonDetailViewModel
 import pe.edu.ulima.ui.login.uis.SplashScreen
 import pe.edu.ulima.ui.theme.*
@@ -42,7 +43,8 @@ class MainActivity : ComponentActivity() {
                     //SplashScreen()
                     //LoginScreen()
                     //PokemonScreen()
-                    PokemonDetailScreen(viewModel = PokemonDetailViewModel())
+                    //PokemonDetailScreen(viewModel = PokemonDetailViewModel())
+                    TouchScreen()
                 }
             }
         }

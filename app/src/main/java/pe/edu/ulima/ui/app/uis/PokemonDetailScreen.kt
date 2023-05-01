@@ -86,7 +86,9 @@ public fun PokemonDetailScreen(
             }
     }
 
-    Column(){
+    Column(
+        modifier = Modifier.padding(start = 20.dp, end = 20.dp)
+    ){
         uri3?.let {
             if(Build.VERSION.SDK_INT < 24){
                 bitmap.value = MediaStore.Images.Media.getBitmap(context.contentResolver, it)
@@ -114,11 +116,12 @@ public fun PokemonDetailScreen(
             )
         }
         Button(
+            modifier = Modifier.fillMaxWidth(),
             onClick = {
                 launcher.launch("image/*")
             }
         ) {
-            Text(text = "Take a picture")
+            Text(text = "Seleccionar Imagen")
         }
         // name
         TextField(
@@ -177,6 +180,24 @@ public fun PokemonDetailScreen(
                     Text(text = label)
                 }
             }
+        }
+        // checkbox
+        Row(){
+            val checkStateJava = remember {
+                mutableStateOf(false)
+            }
+
+            Checkbox(
+                checked = checkStateJava.value,
+                onCheckedChange = {
+                    checkStateJava.value = it
+                },
+
+            )
+            Text(
+                text = "Java",
+                modifier = Modifier.padding(start = 5.dp, top = 12.dp)
+            )
         }
         // hr
         Divider(
