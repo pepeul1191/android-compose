@@ -1,4 +1,4 @@
-package pe.edu.ulima
+package pe.edu.ulima.activities
 
 import android.os.Build
 import android.os.Bundle
@@ -21,6 +21,7 @@ import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import pe.edu.ulima.navigations.LoginNavigation
 import pe.edu.ulima.ui.app.uis.PokemonDetailScreen
 import pe.edu.ulima.ui.login.uis.LoginScreen
 import pe.edu.ulima.ui.app.uis.PokemonScreen
@@ -43,7 +44,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     //SplashScreen()
-                    LoginScreen(loginScreenViewModel)
+                    LoginNavigation(
+                        loginScreenViewModel = loginScreenViewModel,
+                    )
                     //PokemonScreen()
                     //PokemonDetailScreen(viewModel = PokemonDetailViewModel())
                     //TouchScreen()
