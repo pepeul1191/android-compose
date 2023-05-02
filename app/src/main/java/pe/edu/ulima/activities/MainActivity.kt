@@ -29,6 +29,7 @@ import pe.edu.ulima.ui.app.uis.TouchScreen
 import pe.edu.ulima.ui.app.viewmodels.PokemonDetailViewModel
 import pe.edu.ulima.ui.login.uis.SplashScreen
 import pe.edu.ulima.ui.login.viewmodels.LoginScreenViewModel
+import pe.edu.ulima.ui.login.viewmodels.ResetPasswordScreenViewModel
 import pe.edu.ulima.ui.theme.*
 
 class MainActivity : ComponentActivity() {
@@ -36,6 +37,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         var loginScreenViewModel = LoginScreenViewModel()
+        var resetPasswordScreenViewModel = ResetPasswordScreenViewModel()
         setContent {
             ProgramMovilTheme {
                 // A surface container using the 'background' color from the theme
@@ -46,6 +48,7 @@ class MainActivity : ComponentActivity() {
                     //SplashScreen()
                     LoginNavigation(
                         loginScreenViewModel = loginScreenViewModel,
+                        resetPasswordScreenViewModel = resetPasswordScreenViewModel,
                     )
                     //PokemonScreen()
                     //PokemonDetailScreen(viewModel = PokemonDetailViewModel())
@@ -53,18 +56,5 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
-
-@Preview(showBackground = true)
-@Composable
-fun DefaultPreview() {
-    ProgramMovilTheme {
-        Greeting("Android")
     }
 }

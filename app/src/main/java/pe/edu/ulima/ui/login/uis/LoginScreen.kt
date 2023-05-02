@@ -36,12 +36,16 @@ import pe.edu.ulima.ui.theme.Orange200
 @Preview
 @Composable
 public fun LoginScreenPreview(){
-    LoginScreen(LoginScreenViewModel())
+    LoginScreen(
+        LoginScreenViewModel(),
+        goToResetPasswordScreen = {}
+    )
 }
 
 @Composable
 public fun LoginScreen(
-    viewModel: LoginScreenViewModel
+    viewModel: LoginScreenViewModel,
+    goToResetPasswordScreen: () -> Unit
 ){
     val context = LocalContext.current as Activity
     // viewmodel
@@ -186,7 +190,7 @@ public fun LoginScreen(
                     .fillMaxWidth()
                     .padding(top = 15.dp/*, start = 40.dp, end = 40.dp*/), // start -> izquierda, end -> derecha
                 onClick = {
-
+                    goToResetPasswordScreen()
                 },
                 colors = ButtonDefaults.buttonColors(backgroundColor = Gray400)
             ){
