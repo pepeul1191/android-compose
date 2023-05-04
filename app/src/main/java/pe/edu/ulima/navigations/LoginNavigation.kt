@@ -3,7 +3,6 @@ package pe.edu.ulima.navigations
 import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,17 +11,16 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import pe.edu.ulima.ui.login.uis.LoginScreen
 import pe.edu.ulima.ui.login.uis.ResetPasswordScreen
-import pe.edu.ulima.ui.login.viewmodels.LoginScreenViewModel
+import pe.edu.ulima.ui.login.viewmodels.LoginViewModel
 import pe.edu.ulima.ui.login.viewmodels.ResetPasswordScreenViewModel
 
 @Composable
 fun LoginNavigation(
-    loginScreenViewModel: LoginScreenViewModel,
+    loginScreenViewModel: LoginViewModel,
     resetPasswordScreenViewModel: ResetPasswordScreenViewModel,
 ){
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val route = navBackStackEntry?.destination?.route
     val parameter = navBackStackEntry?.arguments?.getString("parameter")
     val optionalParameter = navBackStackEntry?.arguments?.getString("optionalParameter")
 

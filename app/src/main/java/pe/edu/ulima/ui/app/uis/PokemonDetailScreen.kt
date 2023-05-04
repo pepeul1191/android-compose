@@ -59,8 +59,6 @@ public fun PokemonDetailScreen(
     viewModel: PokemonDetailViewModel,
 ){
     val context = LocalContext.current as Activity
-    var imageUri by remember { mutableStateOf<Uri?>(null) }
-    var uri2 by remember { mutableStateOf(viewModel.uri) }
     val bitmap = remember { mutableStateOf<Bitmap?>(null)}
     var expanded by remember { mutableStateOf(false) }
     val list = listOf("Kotlin", "Java", "Dart", "Python")
@@ -83,7 +81,8 @@ public fun PokemonDetailScreen(
             uri: Uri? ->
                 if (uri != null){
                     viewModel.updateUri2(uri)
-            }
+                    println(viewModel.urlImage.value)
+                }
     }
 
     Column(
@@ -98,7 +97,15 @@ public fun PokemonDetailScreen(
             }
             viewModel.setUri(uri3!!)
         }
-        if (bitmap.value == null){
+        if(viewModel.urlImage.value != ""){
+            Image(
+                painter = rememberImagePainter(data = viewModel.urlImage.value),
+                contentDescription = null,
+                modifier = Modifier
+                    .size(400.dp)
+                    .padding(20.dp)
+            )
+        }else if (bitmap.value == null){
             Image(
                 painter = painterResource(id = R.drawable.ic_default_image),
                 contentDescription = null,

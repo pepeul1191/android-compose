@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import pe.edu.ulima.R
+import pe.edu.ulima.services.pokemonsList
 import java.io.File
 
 class PokemonDetailViewModel: ViewModel() {
@@ -36,5 +37,20 @@ class PokemonDetailViewModel: ViewModel() {
     var generationName: LiveData<String> = _generationName
     fun updateGenerationName(it: String){
         _generationName.postValue(it)
+    }
+
+    private val _urlImage = MutableLiveData<String>("")
+    var urlImage: LiveData<String> = _urlImage
+    fun updateUrlImage(it: String){
+        _urlImage.postValue(it)
+    }
+
+    fun getPokemon(id: Int){
+        for (pokemon in pokemonsList!!) {
+            if (pokemon.id == id){
+                this.updateName(pokemon.nombre)
+                this.updateUrlImage(pokemon.url)
+            }
+        }
     }
 }

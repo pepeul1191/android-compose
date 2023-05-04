@@ -4,7 +4,6 @@ import android.app.Activity
 import android.util.Log
 import androidx.activity.compose.BackHandler
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
@@ -21,13 +20,11 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.toUpperCase
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import pe.edu.ulima.R
-import pe.edu.ulima.ui.login.viewmodels.LoginScreenViewModel
+import pe.edu.ulima.ui.login.viewmodels.LoginViewModel
 import pe.edu.ulima.ui.theme.Gray200
 import pe.edu.ulima.ui.theme.Gray400
 import pe.edu.ulima.ui.theme.Green200
@@ -37,14 +34,14 @@ import pe.edu.ulima.ui.theme.Orange200
 @Composable
 public fun LoginScreenPreview(){
     LoginScreen(
-        LoginScreenViewModel(),
+        LoginViewModel(),
         goToResetPasswordScreen = {}
     )
 }
 
 @Composable
 public fun LoginScreen(
-    viewModel: LoginScreenViewModel,
+    viewModel: LoginViewModel,
     goToResetPasswordScreen: () -> Unit
 ){
     val context = LocalContext.current as Activity

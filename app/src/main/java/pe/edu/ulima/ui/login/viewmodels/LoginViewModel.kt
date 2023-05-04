@@ -1,12 +1,11 @@
 package pe.edu.ulima.ui.login.viewmodels
 
 import android.os.Handler
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class LoginScreenViewModel: ViewModel() {
+class LoginViewModel: ViewModel() {
     private val _usuario = MutableLiveData<String>("")
     var usuario: LiveData<String> = _usuario
     fun updateUsuario(it: String){
