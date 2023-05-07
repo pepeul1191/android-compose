@@ -1,7 +1,6 @@
 package pe.edu.ulima.navigations
 
-import android.os.Build
-import androidx.annotation.RequiresApi
+import android.util.Log
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -16,11 +15,10 @@ import pe.edu.ulima.ui.app.uis.PokemonScreen
 import pe.edu.ulima.ui.app.viewmodels.PokemonDetailViewModel
 import pe.edu.ulima.ui.app.viewmodels.PokemonViewModel
 
-@RequiresApi(Build.VERSION_CODES.P)
 @Composable
 fun AppNavigation(
     pokemonScreenModel: PokemonViewModel,
-    pokemonDetailViewModel: PokemonDetailViewModel,
+    pokemonDetailViewModel: PokemonDetailViewModel
 ){
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
@@ -30,29 +28,30 @@ fun AppNavigation(
         navController = navController,
         startDestination = "/pokemon"
     ){
+        // vista para mostrar el listado de pokemones
         composable(
-            route = "/pokemon",
-            arguments = listOf()
+            route = "/pokemon"
         ){
-            entry ->
-                PokemonScreen(
-                    pokemonScreenModel,
-                    goToPokemonDetail = {
-                        navController.navigate("/pokemon?pokemon_id=${pokemonScreenModel.selectedId}")
-                    }
-                )
+           PokemonScreen(
+               viewModel = pokemonScreenModel,
+               navController
+           )
         }
+        // vista para mostrar otra cosa
         composable(
-            route = "/pokemon?pokemon_id={pokemon_id}",
+            route = "/pokemon/detalle?pokemon_id={pokemon_id}",
             arguments = listOf(
-                navArgument("pokemon_id") {
+                navArgument("pokemon_id"){
                     type = NavType.IntType
                     defaultValue = 0
                 }
             )
-        ){ entry ->
+        ){
+            Log.d("APP_NAVIGATION", pokemonIdParam.toString())
             pokemonDetailViewModel.getPokemon(pokemonIdParam!!)
-            PokemonDetailScreen(pokemonDetailViewModel)
+            PokemonDetailScreen(
+                viewModel = pokemonDetailViewModel
+            )
         }
     }
 }

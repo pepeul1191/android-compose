@@ -1,24 +1,22 @@
 package pe.edu.ulima.ui.app.viewmodels
 
-import android.net.Uri
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.ui.res.painterResource
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import pe.edu.ulima.R
-import pe.edu.ulima.services.pokemonsList
-import java.io.File
+import pe.edu.ulima.models.Pokemon
+import pe.edu.ulima.services.PokemonService
 
 class PokemonDetailViewModel: ViewModel() {
-    private val _uri = mutableStateOf<Uri?>(
-     null
-    )
-    val uri get() = _uri.value
-    fun setUri(uri: Uri) {
-        _uri.value = uri
+    private val _id = MutableLiveData<Int>(0)
+    var id: LiveData<Int> = _id
+    fun updateId(it: Int){
+        _id.postValue(it)
+    }
+
+    private val _url = MutableLiveData<String>("")
+    var url: LiveData<String> = _url
+    fun updateUrl(it: String){
+        _url.postValue(it)
     }
 
     private val _name = MutableLiveData<String>("")
@@ -27,29 +25,26 @@ class PokemonDetailViewModel: ViewModel() {
         _name.postValue(it)
     }
 
-    private val _uri2 = MutableLiveData<Uri>(null)
-    var uri2: LiveData<Uri> = _uri2
-    fun updateUri2(it: Uri){
-        _uri2.postValue(it)
+    private val _peso = MutableLiveData<Float>(0f)
+    var peso: LiveData<Float> = _peso
+    fun updatePeso(it: Float){
+        _peso.postValue(it)
     }
 
-    private val _generationName = MutableLiveData<String>("")
-    var generationName: LiveData<String> = _generationName
-    fun updateGenerationName(it: String){
-        _generationName.postValue(it)
-    }
-
-    private val _urlImage = MutableLiveData<String>("")
-    var urlImage: LiveData<String> = _urlImage
-    fun updateUrlImage(it: String){
-        _urlImage.postValue(it)
+    private val _talla = MutableLiveData<Float>(0f)
+    var talla: LiveData<Float> = _talla
+    fun updateTalla(it: Float){
+        _talla.postValue(it)
     }
 
     fun getPokemon(id: Int){
-        for (pokemon in pokemonsList!!) {
-            if (pokemon.id == id){
+        val pokemonsList: List<Pokemon> = PokemonService.fetchAll()
+        for(pokemon in pokemonsList){
+            if(pokemon.id == id){
+                this.updatePeso(pokemon.peso)
+                this.updateTalla(pokemon.talla)
+                this.updateUrl(pokemon.url)
                 this.updateName(pokemon.nombre)
-                this.updateUrlImage(pokemon.url)
             }
         }
     }

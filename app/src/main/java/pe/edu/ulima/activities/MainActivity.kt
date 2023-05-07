@@ -10,6 +10,8 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
 import pe.edu.ulima.navigations.AppNavigation
+import pe.edu.ulima.navigations.LoginNavigation
+import pe.edu.ulima.ui.app.uis.PokemonScreen
 import pe.edu.ulima.ui.app.viewmodels.PokemonDetailViewModel
 import pe.edu.ulima.ui.app.viewmodels.PokemonViewModel
 import pe.edu.ulima.ui.login.viewmodels.LoginViewModel
@@ -38,12 +40,12 @@ class MainActivity : ComponentActivity() {
                     LoginNavigation(
                         loginScreenViewModel = loginScreenViewModel,
                         resetPasswordScreenViewModel = resetPasswordScreenViewModel,
-                    )*/
+                    )
+                    */
                     AppNavigation(
                         pokemonScreenModel = pokemonScreenModel,
                         pokemonDetailViewModel = pokemonDetailViewModel
                     )
-                    //PokemonScreen()
                     //PokemonDetailScreen(viewModel = PokemonDetailViewModel())
                     //TouchScreen()
                 }

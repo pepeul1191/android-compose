@@ -2,8 +2,8 @@ package pe.edu.ulima.ui.app.viewmodels
 
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
-import pe.edu.ulima.services.pokemonsList
 import pe.edu.ulima.models.Pokemon
+import pe.edu.ulima.services.PokemonService
 
 class PokemonViewModel: ViewModel(){
     private val _pokemons = mutableStateOf<List<Pokemon>?>(
@@ -11,7 +11,7 @@ class PokemonViewModel: ViewModel(){
     )
     val pokemons get() = _pokemons.value
     fun setPokemons() {
-        _pokemons.value = pokemonsList
+        _pokemons.value = PokemonService.fetchAll()
     }
 
     private val _selectedId = mutableStateOf<Int?>(
