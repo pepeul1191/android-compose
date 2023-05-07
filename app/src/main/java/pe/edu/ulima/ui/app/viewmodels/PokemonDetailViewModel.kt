@@ -13,6 +13,12 @@ class PokemonDetailViewModel: ViewModel() {
         _id.postValue(it)
     }
 
+    private val _titulo = MutableLiveData<String>("")
+    var titulo: LiveData<String> = _titulo
+    fun updateTitulo(it: String){
+        _titulo.postValue(it)
+    }
+
     private val _url = MutableLiveData<String>("")
     var url: LiveData<String> = _url
     fun updateUrl(it: String){
@@ -41,6 +47,7 @@ class PokemonDetailViewModel: ViewModel() {
         val pokemonsList: List<Pokemon> = PokemonService.fetchAll()
         for(pokemon in pokemonsList){
             if(pokemon.id == id){
+                this.updateTitulo("Editar Pokemon")
                 this.updatePeso(pokemon.peso)
                 this.updateTalla(pokemon.talla)
                 this.updateUrl(pokemon.url)
