@@ -37,7 +37,7 @@ fun AppNavigation(
                navController
            )
         }
-        // vista para mostrar otra cosa
+        // editar pokemon
         composable(
             route = "/pokemon/detalle?pokemon_id={pokemon_id}",
             arguments = listOf(
@@ -49,6 +49,17 @@ fun AppNavigation(
         ){
             Log.d("APP_NAVIGATION", pokemonIdParam.toString())
             pokemonDetailViewModel.getPokemon(pokemonIdParam!!)
+            PokemonDetailScreen(
+                viewModel = pokemonDetailViewModel
+            )
+        }
+        // crear pokemon
+        composable(
+            route = "/pokemon/new",
+            arguments = listOf(
+            )
+        ){
+            pokemonDetailViewModel.unsetPokemon()
             PokemonDetailScreen(
                 viewModel = pokemonDetailViewModel
             )

@@ -55,4 +55,12 @@ class PokemonDetailViewModel: ViewModel() {
             }
         }
     }
+
+    fun unsetPokemon(){
+        this.updateTitulo("Crear Pokemon")
+        this.updatePeso(0f)
+        this.updateTalla(0f)
+        this.updateUrl("")
+        this.updateName("")
+    }
 }

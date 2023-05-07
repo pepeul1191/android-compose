@@ -6,16 +6,22 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material.FloatingActionButton
+import androidx.compose.material.Icon
 import androidx.compose.material.Text
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import coil.compose.rememberImagePainter
 import pe.edu.ulima.models.Pokemon
 import pe.edu.ulima.ui.app.viewmodels.PokemonViewModel
+import pe.edu.ulima.ui.theme.Orange200
 
 @Preview
 @Composable
@@ -51,5 +57,22 @@ public fun PokemonScreen(
             }
         }
     )
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.BottomEnd
+    ) {
+        FloatingActionButton(
+            onClick = {
+                navController.navigate("/pokemon/new")
+                      },
+            content = {
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = null
+                ) },
+            backgroundColor = Orange200,
+            modifier = Modifier.padding(20.dp)
+        )
+    }
 }
 
