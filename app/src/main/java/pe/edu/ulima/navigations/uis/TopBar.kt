@@ -22,17 +22,27 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.core.content.FileProvider
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import pe.edu.ulima.BuildConfig
 import pe.edu.ulima.R
 
 @Preview
 @Composable
 fun TopBarPreview(){
-    TopBar(showBottomSheetDialog = {})
+    TopBar(
+        showBottomSheetDialog = {},
+        rememberNavController(),
+        0
+    )
 }
 
 @Composable
-fun TopBar(showBottomSheetDialog: () -> Unit){
+fun TopBar(
+    showBottomSheetDialog: () -> Unit,
+    navController: NavHostController,
+    userId: Int
+){
     Box(
         modifier = Modifier
             .height(80.dp)
@@ -49,17 +59,21 @@ fun TopBar(showBottomSheetDialog: () -> Unit){
                 )
             },
             actions = {
-                AppBarActions(showBottomSheetDialog)
+                AppBarActions(showBottomSheetDialog, navController, userId)
             }
         )
     }
 }
 
 @Composable
-fun AppBarActions(showBottomSheetDialog: () -> Unit){
+fun AppBarActions(
+    showBottomSheetDialog: () -> Unit,
+    navController: NavHostController,
+    userId: Int
+){
     SearchAction()
     ShareAction(showBottomSheetDialog)
-    MoreAction()
+    MoreAction(navController, userId)
 }
 
 @Composable
@@ -94,30 +108,6 @@ fun ShareAction(showBottomSheetDialog: () -> Unit){
             intent.type = "text/plain"
             intent.putExtra(Intent.EXTRA_TEXT, "https://www.ulima.edu.pe/")
             launcher.launch(intent)
-            /*
-
-            val instagramPackageName = "com.instagram.android"
-            val facebookPackageName = "com.facebook.katana"
-            val whatsappPackageName = "com.whatsapp"
-
-            // Share on Instagram
-            intent.setPackage(instagramPackageName)
-            if (intent.resolveActivity(context.packageManager) != null) {
-                launcher.launch(intent)
-            }
-
-            // Share on Facebook
-            intent.setPackage(facebookPackageName)
-            if (intent.resolveActivity(context.packageManager) != null) {
-                launcher.launch(intent)
-            }
-
-            // Share on WhatsApp
-            intent.setPackage(whatsappPackageName)
-            if (intent.resolveActivity(context.packageManager) != null) {
-                launcher.launch(intent)
-            }
-            */
         }
     ){
         Icon(
@@ -129,7 +119,10 @@ fun ShareAction(showBottomSheetDialog: () -> Unit){
 }
 
 @Composable
-fun MoreAction(){
+fun MoreAction(
+    navController: NavHostController,
+    userId: Int
+){
     var expanded by remember { mutableStateOf(false)}
     val context = LocalContext.current
     IconButton(
@@ -152,6 +145,7 @@ fun MoreAction(){
                 onClick = {
                     expanded = false
                     //context.startActivity(Intent(context, UploadActivity::class.java))
+                    navController.navigate("/profile/?user_id=$userId")
                 }
             ){
                 Text(

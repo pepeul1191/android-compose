@@ -1,5 +1,6 @@
 package pe.edu.ulima.activities
 
+import android.app.Activity
 import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,6 +10,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import pe.edu.ulima.navigations.AppNavigation
 import pe.edu.ulima.navigations.LoginNavigation
 import pe.edu.ulima.ui.app.uis.PokemonScreen
@@ -26,8 +28,6 @@ class MainActivity : ComponentActivity() {
         var loginScreenViewModel = LoginViewModel()
         var resetPasswordScreenViewModel = ResetPasswordScreenViewModel()
         // screen navigation
-        var pokemonScreenModel = PokemonViewModel()
-        var pokemonDetailViewModel = PokemonDetailViewModel()
         setContent {
             ProgramMovilTheme {
                 // A surface container using the 'background' color from the theme
@@ -36,15 +36,9 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colors.background
                 ) {
                     //SplashScreen()
-                    /*
                     LoginNavigation(
                         loginScreenViewModel = loginScreenViewModel,
                         resetPasswordScreenViewModel = resetPasswordScreenViewModel,
-                    )
-                    */
-                    AppNavigation(
-                        pokemonScreenModel = pokemonScreenModel,
-                        pokemonDetailViewModel = pokemonDetailViewModel
                     )
                     //PokemonDetailScreen(viewModel = PokemonDetailViewModel())
                     //TouchScreen()

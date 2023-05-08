@@ -44,7 +44,7 @@ public fun LoginScreen(
     viewModel: LoginViewModel,
     goToResetPasswordScreen: () -> Unit
 ){
-    val context = LocalContext.current as Activity
+    val context = LocalContext.current
     // viewmodel
     val usuario : String by viewModel.usuario.observeAsState(initial = "")
     val contrasenia : String by viewModel.contrasenia.observeAsState(initial = "")
@@ -54,7 +54,8 @@ public fun LoginScreen(
         IconButton(
             onClick = {
                 Log.d("LOGIN_SCREEN", "XDDDDDDDDDDDDDDDDDDD")
-                context.finish()
+                val activity = context as Activity
+                activity.finish()
             },
             modifier = Modifier.align(Alignment.TopEnd).padding(10.dp)
         ){
@@ -147,7 +148,7 @@ public fun LoginScreen(
                     .fillMaxWidth()
                     .padding(top = 15.dp/*, start = 40.dp, end = 40.dp*/), // start -> izquierda, end -> derecha
                 onClick = {
-                    viewModel.validar()
+                    viewModel.validar(context)
                 }
             ){
                 Text("INGRESAR")
@@ -196,7 +197,8 @@ public fun LoginScreen(
 
             BackHandler {
                 Log.d("LoginScreen", "XDDDDDDDDDDDDDDDDDDDDDDDdd")
-                context.finish()
+                val activity = context as Activity
+                activity.finish()
             }
 
         }

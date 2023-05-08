@@ -1,5 +1,6 @@
 package pe.edu.ulima.ui.app.uis
 
+import android.app.Activity
 import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
@@ -14,6 +15,7 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -40,7 +42,11 @@ public fun PokemonScreen(
     viewModel: PokemonViewModel,
     navController: NavHostController
 ){
+    val context = LocalContext.current
     viewModel.setPokemons()
+    val activity = context as Activity
+    val intent = activity?.intent
+    var userId = intent.getIntExtra("user_id", 0)
     var isBottomSheetOpen by rememberSaveable { mutableStateOf(false) }
 
     ModalBottomSheetLayout(
@@ -64,9 +70,10 @@ public fun PokemonScreen(
         ) {
             TopBar(
                 showBottomSheetDialog = {
-                    println("+++++++++++++++++++++++++++++++++++++++")
                     isBottomSheetOpen = true
-                }
+                },
+                navController,
+                userId
             )
             LazyVerticalGrid(
                 modifier = Modifier.fillMaxSize(),

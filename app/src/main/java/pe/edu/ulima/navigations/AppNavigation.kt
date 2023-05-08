@@ -12,17 +12,21 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import pe.edu.ulima.ui.app.uis.PokemonDetailScreen
 import pe.edu.ulima.ui.app.uis.PokemonScreen
+import pe.edu.ulima.ui.app.uis.ProfileScreen
 import pe.edu.ulima.ui.app.viewmodels.PokemonDetailViewModel
 import pe.edu.ulima.ui.app.viewmodels.PokemonViewModel
+import pe.edu.ulima.ui.app.viewmodels.ProfileViewModel
 
 @Composable
 fun AppNavigation(
     pokemonScreenModel: PokemonViewModel,
-    pokemonDetailViewModel: PokemonDetailViewModel
+    pokemonDetailViewModel: PokemonDetailViewModel,
+    profileViewModel: ProfileViewModel
 ){
     val navController = rememberNavController()
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val pokemonIdParam = navBackStackEntry?.arguments?.getInt("pokemon_id")
+    val userId = navBackStackEntry?.arguments?.getInt("user_id")
 
     NavHost(
         navController = navController,
@@ -62,6 +66,22 @@ fun AppNavigation(
             pokemonDetailViewModel.unsetPokemon()
             PokemonDetailScreen(
                 viewModel = pokemonDetailViewModel
+            )
+        }
+        // profile
+        composable(
+            route = "/profile/?user_id={user_id}",
+            arguments = listOf(
+                navArgument("user_id"){
+                    type = NavType.IntType
+                    defaultValue = 0
+                }
+            )
+        ){
+            Log.d("APP_NAVIGATION", pokemonIdParam.toString())
+            profileViewModel.setUsuario(userId!!)
+            ProfileScreen(
+                viewModel = profileViewModel
             )
         }
     }
